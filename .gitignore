@@ -62,3 +62,6 @@ typings/
 
 # database file
 /database
+
+# idea folder
+.idea/
