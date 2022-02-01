@@ -1,14 +1,8 @@
-const express = require('express')
-const routes = require('./routes/index')
-const config = require('./configs/config')
-const app = express()
+// require('dotenv').config();
 
-// parse requests of content-type – application/json
-app.use(express.json())
+const server = require('./api/server.js');
 
-// load routes
-app.use('/api', routes)
-
-app.listen(config.web.port, () => {
-    console.log(`server is running at port ${config.web.port}`)
-})
+const PORT = process.env.PORT || 4000;
+server.listen(PORT, () => {
+    console.log(`\n=== Server listening on port ${PORT} ===\n`);
+});

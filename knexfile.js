@@ -1,27 +1,37 @@
-const pg = require('pg')
-
-if (process.env.DATABASE_URL) {
-    pg.defaults.ssl = {rejectUnauthorized: false}
-}
-
-const sharedConfig = {
-    client: 'pg',
-    migrations: {directory: './api/data/migrations'},
-    seeds: {directory: './api/data/seeds'},
-}
-
 module.exports = {
     development: {
-        ...sharedConfig, //we want to use the same sharedConfig in the 3 different types of db, so we use the spread operator
-        connection: process.env.DEV_DATABASE_URL,
+        client: 'pg',
+        connection: 'postgres://localhost/africanmarketplace',
+        migrations: {
+            directory: './db/migrations'
+        },
+        seeds: {
+            directory: './db/seeds/dev'
+        },
+        useNullAsDefault: true
     },
-    testing: {
-        ...sharedConfig,
-        connection: process.env.TESTING_DATABASE_URL,
+
+    test: {
+        client: 'pg',
+        connection: 'postgres://localhost/africanmarketplacetest',
+        migrations: {
+            directory: './db/migrations'
+        },
+        seeds: {
+            directory: './db/seeds/test'
+        },
+        useNullAsDefault: true
     },
+
     production: {
-        ...sharedConfig,
+        client: 'pg',
         connection: process.env.DATABASE_URL,
-        pool: {min: 2, max: 10},
-    },
+        migrations: {
+            directory: './db/migrations'
+        },
+        seeds: {
+            directory: './db/seeds/production'
+        },
+        useNullAsDefault: true
+    }
 }
