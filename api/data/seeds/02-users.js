@@ -1,11 +1,9 @@
-const bcrypt = require("bcryptjs");
-
 exports.seed = function (knex) {
 
-    return knex('users').insert([
+    return knex('african-marketplace').insert([
         {
             username: 'admin',
-            password: bcrypt.hashSync("password"),
+            password: 'password',
             first_name: 'admin',
             last_name: 'admin',
             email: 'admin@admin.com',
@@ -14,7 +12,7 @@ exports.seed = function (knex) {
         },
         {
             username: 'ownertest',
-            password: bcrypt.hashSync("password"),
+            password: 'password',
             first_name: 'test',
             last_name: 'owner',
             email: 'test@owner.com',
@@ -22,14 +20,14 @@ exports.seed = function (knex) {
         },
         {
             username: 'usertest',
-            password: bcrypt.hashSync("password"),
+            password: 'password',
             first_name: 'test',
             last_name: 'user',
             email: 'test@user.com'
         },
         {
             username: "monkey",
-            password: bcrypt.hashSync("banana"),
+            password: 'banana',
             first_name: "monkeysee",
             last_name: "monkeydo",
             email: "monkey@banana.com",

@@ -2,7 +2,7 @@ exports.up = async (knex) => {
     await knex.schema
 
         // USERS TABLE
-        .createTable('users', table => {
+        .createTable('african-marketplace', table => {
             table.increments('id') // id is auto generated and does not need id name, but I spell out the name anyway
             table.string('username', 200).notNullable().unique()
             table.string('password', 200).notNullable()
@@ -121,5 +121,5 @@ exports.down = async (knex) => {
         .dropTableIfExists('suggested_pricing')
         .dropTableIfExists('categories')
         .dropTableIfExists('locations')
-        .dropTableIfExists('users')
+        .dropTableIfExists('african-marketplace')
 }

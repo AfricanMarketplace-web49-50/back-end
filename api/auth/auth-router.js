@@ -9,9 +9,7 @@ const Users = require('../users/users-model');
 router.post('/register', (req, res) => {
 
     let user = req.body;
-    const rounds = process.env.HASH_ROUNDS || 8;
-    const hash = bcrypt.hashSync(user.password, rounds);
-    user.password = hash;
+    user.password = bcrypt.hashSync(user.password, 8);
 
     Users.add(user)
         .then(saved => {
