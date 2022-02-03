@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const Items = require('./items-model')
-// const { restrict } = require('../users/users-middleware.js');
 const authenticate = require('../auth/auth-middleware.js');
 
 router.get('/', authenticate, (req, res, next) => {
