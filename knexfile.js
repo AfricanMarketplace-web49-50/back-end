@@ -1,37 +1,47 @@
+require('dotenv').config()
+
+const sharedConfig = {
+  client: 'pg',
+  migrations: {directory: './api/data/migrations'},
+  seeds: {directory: './api/data/seeds'},
+}
+
 module.exports = {
-    development: {
-        client: 'pg',
-        connection: 'postgres://localhost/africanmarketplace',
-        migrations: {
-            directory: './db/migrations'
-        },
-        seeds: {
-            directory: './db/seeds/dev'
-        },
-        useNullAsDefault: true
+  development: {
+    client: 'sqlite3',
+    migrations: {directory: './api/data/migrations'},
+    connection: {
+      filename: '.dev.sqlite3'
     },
+    ...sharedConfig
+  },
 
-    test: {
-        client: 'pg',
-        connection: 'postgres://localhost/africanmarketplacetest',
-        migrations: {
-            directory: './db/migrations'
-        },
-        seeds: {
-            directory: './db/seeds/test'
-        },
-        useNullAsDefault: true
+  staging: {
+    client: 'postgres',
+    connection: {
+      database: 'african-marketplace',
+      user: 'postgres',
+      password: 'folpd2006'
     },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    },
+    ...sharedConfig
+  },
 
-    production: {
-        client: 'pg',
-        connection: process.env.DATABASE_URL,
-        migrations: {
-            directory: './db/migrations'
-        },
-        seeds: {
-            directory: './db/seeds/production'
-        },
-        useNullAsDefault: true
-    }
+  production: {
+    client: {
+      client: 'postgres',
+      connection: {
+        database: 'african-marketplace',
+        user: 'postgres',
+        password: 'folpd2006'
+      },
+      ...sharedConfig
+    },
+  }
 }
