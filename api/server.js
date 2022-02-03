@@ -1,24 +1,35 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
+const express = require('express')
+const helmet = require('helmet')
+const cors = require('cors')
 
-const authenticate = require('../auth/authenticate-middleware.js');
-const authRouter = require('../auth/auth-router.js');
-const usersRouter = require('../users/users-router.js');
-const itemsRouter = require('../items/items-router.js');
+const authRouter = require('./auth/auth-router.js');
+const itemsRouter = require('./items/items-router.js');
+const listingsRouter = require('./listings/listings-router.js');
+const locationsRouter = require('./locations/locations-router.js');
+const usersRouter = require('./users/users-router.js');
 
-const server = express();
+const server = express()
+server.use(express.json())
+server.use(helmet())
+server.use(cors())
 
-server.use(helmet());
-server.use(cors());
-server.use(express.json());
 
-server.use('/api/', authRouter);
-server.use('/api/users', authenticate, usersRouter);
-server.use('/api/items', itemsRouter);
+server.use('/api/auth', authRouter)
+server.use('/api/items', itemsRouter)
+server.use('/api/items-for-sale', listingsRouter)
+server.use('/api/locations', locationsRouter)
+server.use('/api/users', usersRouter)
 
-server.get("/", (req, res) => {
-    res.status(200).json({api: "up", dbenv: process.env.DB_ENV});
+
+server.get('/', (req, res) => {
+  res.status(200).send("<h1>Welcome to the African Marketplace API</h1>")
 });
 
-module.exports = server;
+server.use((err, req, res, next) => { // eslint-disable-line
+  res.status(err.status || 500).json({
+    message: err.message,
+    stack: err.stack,
+  });
+});
+
+module.exports = server
